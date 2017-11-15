@@ -9,5 +9,5 @@ Rails.application.routes.draw do
 
   get 'users/:id', to: 'users#show', as: :show_user
 
-  put 'users/:id', to: 'users#follow', as: :follow_user
+  post 'users/:id', to: 'users#follow', as: :follow_user
 end

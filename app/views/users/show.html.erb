@@ -4,8 +4,9 @@
 
 <% if @user.followers.include? current_user %>
 <h2> Currently followed </h2>
+<%= link_to "Unfollow User", follow_user_path(@user), method: :post %>
 <% else %>
-<%= link_to "Follow User", follow_user_path(@user), method: :put %>
+<%= link_to "Follow User", follow_user_path(@user), method: :post %>
 <% end %>
 
 <table>
