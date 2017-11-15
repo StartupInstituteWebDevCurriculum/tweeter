@@ -7,11 +7,7 @@ class Tweet < ApplicationRecord
 
   def process_hashtags
     content.scan(/#\w+/).each do |t|
-      h = ::Hashtag::Hashtag.find_by(tag: t)
-      if (h == nil)
-        h = Hashtag.new(tag: t)
-        h.save
-      end
+      h = Hashtag.find_or_create_by(tag: t)
       self.hashtags << h
     end
   end
