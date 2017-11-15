@@ -1,6 +1,9 @@
 class TweetsController < ApplicationController
-  before_action :set_tweet, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:dashboard, :index, :show]
+before_action :set_tweet, only: [:show, :edit, :update, :destroy]
+    before_action :authenticate_user!, except: [:dashboard, :index, :show]
+    before_action :check_correct_user, only: [:edit, :update, :destroy]
+  #before_action :set_tweet, only: [:show, :edit, :update, :destroy]
+  #before_action :authenticate_user!, except: [:dashboard, :index, :show]
   # GET /tweets
   # GET /tweets.json
   def index
@@ -75,7 +78,16 @@ class TweetsController < ApplicationController
     def set_tweet
       @tweet = Tweet.find(params[:id])
     end
-
+    
+    def check_correct_user
+      if current_user && @tweet.user == current_user
+        redirect_to tweets_url, notice: "Sorry you are not the actual user"
+      end
+     end
+  #def correct_user
+     # @tweet = current_user.tweet.find_by(id: params[:id])
+     # redirect_to tweets_path, notice: "Not authorized to edit this pin" if @tweet.nil?
+   # end
     # Never trust parameters from the scary internet, only allow the white list through.
     def tweet_params
       params.require(:tweet).permit(:content)
