@@ -1,6 +1,7 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:dashboard, :index, :show]
+  before_action :check_correct_user, only: [:edit, :update, :destroy]
   # GET /tweets
   # GET /tweets.json
   def index
@@ -79,5 +80,11 @@ class TweetsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def tweet_params
       params.require(:tweet).permit(:content)
+    end
+
+    def check_correct_user
+      unless current_user && @tweet.user == current_user
+        redirect_to tweets_url, notice: "YOU SUCK"
+      end
     end
 end
