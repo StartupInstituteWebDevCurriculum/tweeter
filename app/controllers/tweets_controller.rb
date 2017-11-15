@@ -4,7 +4,7 @@ class TweetsController < ApplicationController
   # GET /tweets
   # GET /tweets.json
   def index
-    @tweets = Tweet.all
+    @tweets = Tweet.all.order('created_at DESC').limit(25)
   end
 
   # GET /tweets/1
@@ -67,7 +67,7 @@ class TweetsController < ApplicationController
     if current_user
       @tweets = current_user.tweets
     else
-      @tweets = Tweet.order(:created_at).limit(20)
+      @tweets = Tweet.order('created_at DESC').limit(25)
     end
     render :index
   end
