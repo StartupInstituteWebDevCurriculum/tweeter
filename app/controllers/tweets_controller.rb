@@ -5,7 +5,11 @@ class TweetsController < ApplicationController
   # GET /tweets
   # GET /tweets.json
   def index
-    @tweets = Tweet.all.order('created_at DESC').limit(25)
+    if params[:search_by_tag]
+      @tweets = Tweet.search_by_tag(params[:search])
+    else
+      @tweets = Tweet.all.order('created_at DESC').limit(25)
+    end
   end
 
   # GET /tweets/1
@@ -83,9 +87,9 @@ class TweetsController < ApplicationController
       params.require(:tweet).permit(:content)
     end
 
-  def check_correct_user
-    unless current_user && @tweet.user == current_user
-      redirect_to tweets_url, notice: "You cannot do that"
+    def check_correct_user
+      unless current_user && @tweet.user == current_user
+        redirect_to tweets_url, notice: "You cannot do that"
     end
   end
 end

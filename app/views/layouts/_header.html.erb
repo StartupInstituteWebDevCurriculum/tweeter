@@ -1,13 +1,7 @@
 <nav role="navigation">
     <div class="navbar-header">
       <%= link_to "Home", root_path %>
-      <% if current_user  %>
-				Following (<%= current_user.following_users.count%>)
-        Followers (<%= current_user.followers.count%>)
-			<% end %>
     </div>
-
-
     <div class="sign-in-out">
       <% if !current_user %>
       	<%= link_to "Sign In", new_user_session_path %>
@@ -16,3 +10,9 @@
     	<% end %>
     </div>
 </nav>
+<p>
+  <% if current_user  %>
+    Following: <%= current_user.following_users.count%>
+    Followers: <%= current_user.followers.count%>
+  <% end %>
+</p>

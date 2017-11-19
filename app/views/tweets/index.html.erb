@@ -1,8 +1,16 @@
 <h1>Tweets</h1>
+
+<%= form_tag(tweets_path, :method => 'get', id: "search-form") do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search by hashtag", :name => 'search_by_tag' %>
+  </p>
+<% end %>
 <table>
   <thead>
     <tr>
       <th>Content</th>
+      <th>Hashtags</th>
       <th>User</th>
       <th colspan="3"></th>
     </tr>
