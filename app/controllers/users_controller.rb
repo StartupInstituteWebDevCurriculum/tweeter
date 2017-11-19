@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:follow]
+  before_action :authenticate_user!, only: [:follow, :unfollow]
 
   def show
     @user = User.find(params[:id])
@@ -16,5 +16,7 @@ class UsersController < ApplicationController
       current_user.following_users << @user
       redirect_to show_user_url(@user)
     end
+
   end
+
 end

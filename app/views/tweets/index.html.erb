@@ -22,5 +22,6 @@
 </table>
 
 <br>
-
+<% if user_signed_in? %>
 <%= link_to 'New Tweet', new_tweet_path %>
+<% end %>

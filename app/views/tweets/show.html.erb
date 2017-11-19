@@ -7,6 +7,7 @@
   <strong>User:</strong>
   <%= @tweet.user.email %>
 </p>
+
 <% if @tweet.user == current_user %>
 	<%= link_to 'Edit', edit_tweet_path(@tweet) %> |
 <% end %>
