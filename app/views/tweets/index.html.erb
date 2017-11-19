@@ -17,13 +17,16 @@
         <td><%= tweet.content %></td>
         <td><%= link_to tweet.user.email, show_user_path(tweet.user) %></td>
         <td><%= link_to 'Show', tweet %></td>
+        <% if user_signed_in? %>
         <td><%= link_to 'Edit', edit_tweet_path(tweet) %></td>
         <td><%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+      <% end %> 
     <% end %>
   </tbody>
 </table>
 
 <br>
-
+<% if user_signed_in? %>
 <%= link_to 'New Tweet', new_tweet_path %>
+<% end %>
