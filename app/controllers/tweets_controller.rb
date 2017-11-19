@@ -1,10 +1,15 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:dashboard, :index, :show]
+  before_action :check_correct_user, only: [:edit, :update, :destroy]
   # GET /tweets
   # GET /tweets.json
   def index
-    @tweets = Tweet.all.order('created_at DESC').limit(25)
+    if params[:search_by_tag]
+      @tweets = Tweet.search_by_tag(params[:search])
+    else
+      @tweets = Tweet.all.order('created_at DESC').limit(25)
+    end
   end
 
   # GET /tweets/1
@@ -66,6 +71,7 @@ class TweetsController < ApplicationController
   def dashboard
     if current_user
       @tweets = current_user.tweets
+      @user = current_user
     else
       @tweets = Tweet.order('created_at DESC').limit(25)
     end
@@ -82,4 +88,10 @@ class TweetsController < ApplicationController
     def tweet_params
       params.require(:tweet).permit(:content)
     end
+
+    def check_correct_user
+      unless current_user && @tweet.user == current_user
+        redirect_to tweets_url, notice: "You cannot do that"
+    end
+  end
 end

@@ -1,0 +1,10 @@
+<tr>
+	<td><%= tweet.content %></td>
+	<td><%= tweet.get_hashtags %></td>
+	<td><%= link_to tweet.user.email, show_user_path(tweet.user) %></td>
+	<td><%= link_to 'Show', tweet %></td>
+	<% if tweet.user == current_user %>
+		<td><%= link_to 'Edit', edit_tweet_path(tweet) %></td>
+		<td><%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<% end %>
+</tr>

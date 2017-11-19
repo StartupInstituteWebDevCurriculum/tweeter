@@ -1,28 +1,23 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Tweets</h1>
 
+<%= form_tag(tweets_path, :method => 'get', id: "search-form") do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search by hashtag", :name => 'search_by_tag' %>
+  </p>
+<% end %>
 <table>
   <thead>
     <tr>
       <th>Content</th>
+      <th>Hashtags</th>
       <th>User</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @tweets.each do |tweet| %>
-      <tr>
-        <td><%= tweet.content %></td>
-        <td><%= link_to tweet.user.email, show_user_path(tweet.user) %></td>
-        <td><%= link_to 'Show', tweet %></td>
-        <% if user_signed_in? %>
-        <td><%= link_to 'Edit', edit_tweet_path(tweet) %></td>
-        <td><%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-      <% end %> 
-    <% end %>
+    <%= render @tweets %>
   </tbody>
 </table>
 

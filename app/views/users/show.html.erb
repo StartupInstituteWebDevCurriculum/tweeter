@@ -1,12 +1,12 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Tweets by <%= @user.email %></h1>
 
-<% if @user.followers.include? current_user %>
-<h2> Currently followed </h2>
-<%= link_to "Unfollow User", follow_user_path(@user), method: :post %>
-<% else %>
-<%= link_to "Follow User", follow_user_path(@user), method: :post %>
+<% if current_user %>
+  <% if @user.followers.include? current_user %>
+    <h2> Currently followed </h2>
+    <%= link_to "Unfollow User", follow_user_path(@user), method: :post %>
+  <% else %>
+    <%= link_to "Follow User", follow_user_path(@user), method: :post %>
+  <% end %>
 <% end %>
 
 <table>
@@ -18,17 +18,7 @@
   </thead>
 
   <tbody>
-    <% @tweets.each do |tweet| %>
-      <tr>
-        <td><%= tweet.content %></td>
-        
-        <td><%= link_to 'Show', tweet %></td>
-        <% if user_signed_in? %>
-        <td><%= link_to 'Edit', edit_tweet_path(tweet) %></td>
-        <td><%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-      <% end %>
-    <% end %>
+    <%= render @tweets %>
   </tbody>
 </table>
 
